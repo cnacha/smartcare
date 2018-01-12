@@ -1,0 +1,20 @@
+<ion-view view-title="Login"  class="login-content">
+    <ion-content style="background: url(img/login.jpg) center; background-size: cover; align:center; vertical-align: middle;">
+       <div>
+           <div class="app-icon"></div> 
+           <h1 class="appname pretty-slim-text">Smart Care</h1>
+		   <h5 class="light-text pretty-thai-text">Personalized Healthcare Services</h4>
+		  <!--  <h5 class="light-text pretty-thai-text small-text">โดย  โรงพยาบาลเกษมราษฎร์ ศรีบุรินทร์ </h4> -->
+			<div class="list padding">
+				<ion-md-input class="pretty-slim-text" placeholder="Username" highlight-color="energized" ng-model="formData.username" type="text"></ion-md-input>
+				<ion-md-input class="pretty-slim-text" placeholder="Password" type="password" ng-model="formData.password"></ion-md-input>
+				 <div class="padding login-button">
+				<button ng-click="ksmLogin()" class="button  pretty-thai-text icon-left ion-log-in button-light ink">เข้าสู่ระบบ</button>
+				<button ng-click="ksmRegister()" class="button pretty-thai-text icon-left ion-android-create button-violet">ลงทะเบียน</button>
+				</div>
+		   </div>
+			<p class="bottom-text" nowrap>School of Information Technology <BR>Mae Fah Luang University 2017</p>
+		
+		</div>
+    </ion-content>
+</ion-view>

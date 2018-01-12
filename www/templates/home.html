@@ -1,0 +1,160 @@
+<ion-view view-title="Smart Care">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" style="background: url(img/login.jpg) center; background-size: cover; align:center; vertical-align: middle;">
+
+		<div class="row">
+				<div class="col col-50 no-margin" >
+					<div class="row" style="background: rgba(0, 0, 0, 0.3);text-align: center">
+						<div class = "col center-text" ><i class="material-icons light-text big-icon">&#xE84E;</i></div>
+						<div class = "col " >
+							<h2 class="light-text pretty-thai-text">ร่างกาย</h2>
+						</div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.3);text-align: right"><span class="pretty-thai-text small-text light-text" style="text-align: center">ส่วนสูง (ซม.)</span><BR/><span class="pretty-slim-text big-text light-text" style="text-align: center">{{bodyHeight}}</span></div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.4);text-align: right"><span class="pretty-thai-text small-text light-text" style="text-align: center">น้ำหนัก (กก.)</span><BR/><span class="pretty-slim-text big-text light-text" style="text-align: center">{{bodyWeight}}</span></div>
+					</div>
+					
+				</div>
+				<div class = "col box-outset-shadow padding center-text pretty-slim-text light-text" style="background: rgba(0, 0, 0, 0.2)">
+					<h3 class="light-text pretty-thai-text">ดัชนีมวลกาย(BMI)</h3>
+					<ng-gauge size="100" type="full" thick="3" min="0" max="200" value="bmi" cap="round" label="kg/m2"  foreground-color="#FFF" background-color="rgba(255,255,255, 0.4)" append="" ></ng-gauge>
+					<p class="light-text pretty-slim-text">{{bodyAnalysis}}</p>
+				</div>
+		</div>
+		<div class="padding center-text dark-text " ng-if="loadingLifeStyleData == true">
+			<h4 class="light-text pretty-thai-text">กำลังโหลดข้อมูล</h4>
+			<img src="img/loader.gif">
+		</div>
+		<div ng-if="loadingLifeStyleData == false">
+			<div class="padding">
+			  <div class="row">
+				<div class="col "><h3 class="light-text pretty-thai-text">การบริโภคพลังงาน</h3></div>
+				<div class="col right-text"><button ui-sref="app.consumption" class="button right-text icon-right pretty-thai-text ion-chevron-right button-light shadow-text button-clear ink">แสดง</button></div>
+			  </div>
+			  
+			  <canvas ng-if="nutritionLabels.length > 0" id="line" class="chart light-text chart-line" chart-data="nutritionData" chart-labels="nutritionLabels" chart-legend="true" chart-series="nutritionSeries" chart-options="{scaleLabel: { fontColor: '#ffffff'}}"></canvas>
+			  <div class="row" ng-if="nutritionLabels.length == 0">
+				<div class="col center-text light-text pretty-thai-text">ยังไม่มีการบันทึก</div>
+			  </div>
+			</div>
+			
+			<div class="padding">
+			  <div class="row">
+				<div class="col "><h3 class="light-text pretty-thai-text">กิจกรรมประจำวัน</h3></div>
+				<div class="col right-text" ng-if="lifestyleData.length!=0"><button ui-sref="app.lifestyle" class="button right-text icon-right pretty-thai-text ion-chevron-right button-light shadow-text button-clear ink">แสดง</button></div>
+				<div class="col right-text" ng-if="lifestyleData.length==0"><button ui-sref="app.lifestyle" class="button right-text icon-right pretty-thai-text ion-chevron-right button-light shadow-text button-clear ink">บันทึก</button></div>
+			  </div>
+			  <canvas ng-if="lifestyleData.length!=0" id="line" class="chart light-text chart-line" chart-data="lifestyleData" chart-labels="lifestyleLabels" chart-legend="true" chart-series="lifestyleSeries" chart-options="lifestyleOptions"></canvas>
+			</div>
+		
+		</div>
+		<div class="row">
+				<div class="col col-50 no-margin" >
+					<div class="row" style="background: rgba(0, 0, 0, 0.3);text-align: center">
+						<div class = "col center-text" ><i class="material-icons light-text big-icon">&#xE87D;</i></div>
+						<div class = "col " >
+							<h2 class="light-text pretty-thai-text">โลหิต</h2>
+						</div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.3);text-align: right"><span class="pretty-thai-text small-text light-text" style="text-align: center">หมู่โลหิต</span><BR/><span class="pretty-slim-text big-text light-text" style="text-align: center">{{bloodGroup}}</span></div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.4);text-align: right"><span class="pretty-thai-text small-text light-text" style="text-align: center">RH</span><BR/><span class="pretty-slim-text big-text light-text" style="text-align: center">{{bloodRH}}</span></div>
+					</div>
+					
+				</div>
+				<div class = "col box-outset-shadow padding center-text pretty-slim-text light-text" style="background: rgba(0, 0, 0, 0.2)">
+					<h3 class="light-text pretty-thai-text">ความดันโลหิต</h3>
+					<div class="row light-text">
+						<div class="col ">Systolic</div>
+						<div class="col pretty-slim-text big-text">{{bpSystolic}} </div>
+						<div class="col ">mmHg</div>
+					</div>
+					<div class="row light-text">
+						<div class="col">Diastolic</div>
+						<div class="col pretty-slim-text big-text">{{bpDiastolic}} </div>
+						<div class="col ">mmHg</div>
+					</div>
+				</div>
+		</div>
+		<div class="padding center-text dark-text " ng-if="loadingSymptomData == true">
+			<h4 class="light-text pretty-thai-text">กำลังโหลดข้อมูล</h4>
+			<img src="img/loader.gif">
+		</div>
+		<div ng-if="loadingSymptomData == false">
+			<div class="padding" ng-if="symptomList.length == 0">
+			</div>
+			<div ng-if="symptomList.length > 0">
+				<h2 class="light-text padding pretty-thai-text shadow-text ">ความเสี่ยงต่อโรค</h2>
+				<ion-list class="no-margin">
+					<ion-item  ui-sref="app.diagnosis({sindex: '{{$index}}'})" ng-repeat="symptom in symptomList track by $index">
+					<div class="">
+						<div class="row no-margin" >
+							<div class="col col-30 col-center center-text light-text pretty-thai-text">
+							
+							<i ng-if="symptom.probablityVariant > 0"  class="material-icons">&#xE8E5;</i>
+							<i ng-if="symptom.probablityVariant < 0"  class="material-icons">&#xE8E3;</i>
+							<i ng-if="symptom.probablityVariant == 0"  class="material-icons">&#xE915;</i>
+							<BR/><span nowrap>แนวโน้ม</span>
+							</div>
+							
+							<div class="col col-50 center-text light-text pretty-slim-text" >
+								<h2 class="light-text pretty-thai-text bold-text">{{symptom.symptomName}}</h2>
+								<ng-gauge size="80" type="arch"  thick="2" min="0" max="100" value="symptom.probability" cap="round" label="Probability"  foreground-color="#DEFFFC" background-color="rgba(255,255,255, 0.4)" append="%" ></ng-gauge>
+							</div>
+							
+							<div class="col col-20 col-center light-text pretty-slim-text" >
+								<button ui-sref="app.diagnosis({sindex: '{{$index}}'})" class="button icon-right icon pretty-thai-text ion-chevron-right button-light shadow-text button-clear ink"></button>
+							</div>
+						</div>
+					</div>
+					</ion-item>
+				</ion-list>
+			</div>
+		</div>
+		<div class="row">
+				<div class="col col-50 no-margin" >
+					<div class="row" style="background: rgba(0, 0, 0, 0.3);text-align: center">
+						<div class = "col center-text" ><i class="icon light-text big-icon ion-android-calendar"></i></div>
+						<div class = "col " >
+							<h2 class="light-text pretty-thai-text">นัดตรวจ</h2>
+						</div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.3);text-align: right">
+								<span class="pretty-thai-text small-text light-text" style="text-align: center">จำนวนการนัด</span><BR/>
+								<a href class="pretty-slim-text big-text light-text ink" ui-sref="app.listappointment" style="text-align: center">{{totalApt}}</a>
+							</div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="background: rgba(113, 203, 213, 0.4);text-align: right"><span class="pretty-thai-text small-text light-text" style="text-align: center">จำนวนการเข้าตรวจ</span><BR/><span class="pretty-slim-text big-text light-text" style="text-align: center">{{totalVisit}}</span></div>
+					</div>
+					<div class="row box-inset-shadow" style="margin:0;padding:0;">
+							<div class = "col " style="text-align: right">
+							<button class="button icon-left icon pretty-thai-text ion-ios-plus-outline button-light button-clear ink" ui-sref="app.newappointment">ขอนัดตรวจ</button>
+							</div>
+					</div>
+
+				</div>
+				<div class = "col box-outset-shadow padding center-text pretty-slim-text light-text" style="background: rgba(0, 0, 0, 0.2)">
+					<h3 class="light-text pretty-thai-text">นัดตรวจครั้งต่อไป</h3>
+					<div ng-switch on="hasApt">
+						<div ng-switch-when="true">
+							<h2 class="light-text pretty-thai-text big-text">{{aptTxt}}</h2><BR/>
+							<span class="light-text pretty-thai-text small-text">{{nextApt.specialty}}</span><BR/>
+							<span class="light-text pretty-thai-text small-text">เวลา {{nextAptTime}} <BR/>วันที่ {{nextAptDate}}</span>
+						 </div>
+						 <div ng-switch-default>
+							<h2 class="light-text pretty-thai-text big-text">ไม่มี</h2><BR/>
+						</div>
+							
+
+					</div>
+					
+				</div>
+		</div>
+    </ion-content>
+</ion-view>
